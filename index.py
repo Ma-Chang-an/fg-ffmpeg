@@ -71,6 +71,7 @@ def invoke():
         subprocess.run(
             cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
 
+        os.remove(inputPath)
         for filename in os.listdir('/tmp/'):
             filepath = '/tmp/' + filename
             if filename.startswith(shortname) and filename.endswith(dstType):
