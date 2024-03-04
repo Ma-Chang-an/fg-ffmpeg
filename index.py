@@ -1,6 +1,6 @@
 import subprocess
 import os
-from obs import ObsClient, GetObjectHeader
+from obs import ObsClient, GetObjectHeader, PutObjectHeader
 from flask import Flask, request
 
 app = Flask(__name__, static_folder='static', template_folder='templates')
@@ -75,8 +75,10 @@ def invoke():
         for filename in os.listdir('/tmp/'):
             filepath = '/tmp/' + filename
             if filename.startswith(shortname) and filename.endswith(dstType):
+                headers = PutObjectHeader()
+                headers.contentType = 'text/plain'
                 objectKey = os.path.join(outputDir, fileDir, filename)
-                resp = ObsClient.putObject(obsBucketName, objectKey, filepath)
+                resp = ObsClient.putFile(obsBucketName, objectKey, filepath, headers=headers)
                 os.remove(filepath)
                 if resp.status >= 300:
                     app.logger.error(resp.body)
