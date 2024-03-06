@@ -3,6 +3,20 @@ import os
 from obs import ObsClient, GetObjectHeader, PutObjectHeader
 from flask import Flask, request
 
+'''
+1. function and bucket locate in same region
+2. service's role has OSSFullAccess
+3. event format
+{
+    "bucket_name" : "test-bucket",
+    "object_key" : "a.mp3",
+    "output_dir" : "output/",
+    "dst_type": ".wav",
+    "ac": 1,
+    "ar": 4000
+}
+'''
+
 app = Flask(__name__, static_folder='static', template_folder='templates')
 app.logger.setLevel('INFO')
 
