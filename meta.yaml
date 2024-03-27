@@ -8,8 +8,14 @@ app-template:
   type: "Media Processing"
   functions:
     ffmpeg-audio-convert:
+      config: "{\"enable_auth_in_header\":true}"
     ffmpeg-get-duration:
+      config: "{\"enable_auth_in_header\":true}"
     ffmpeg-get-meta:
+      config: "{\"enable_auth_in_header\":true}"
     ffmpeg-get-sprites:
+      config: "{\"enable_auth_in_header\":true}"
     ffmpeg-video-gif:
+      config: "{\"enable_auth_in_header\":true}"
     ffmpeg-video-watermark:
+      config: "{\"enable_auth_in_header\":true}"

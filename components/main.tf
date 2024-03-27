@@ -42,7 +42,6 @@ resource "huaweicloud_fgs_function" "ffmpeg-audio-convert" {
   memory_size           = 512
   timeout               = 600
   user_data             = format("{\"ENDPOINT\":\"%s\"}", local.obs)
-  encrypted_user_data   = format("{\"AccessKeyID\":\"%s\", \"SecretAccessKey\":\"%s\"}", var.ak, var.sk)
   custom_image {
     url = format("swr.%s.myhuaweicloud.com/custom_container/fg-ffmpeg:audio-convert-%s", var.region, var.image_version)
   }
@@ -58,7 +57,6 @@ resource "huaweicloud_fgs_function" "ffmpeg-get-duration" {
   memory_size           = 512
   timeout               = 600
   user_data             = format("{\"ENDPOINT\":\"%s\"}", local.obs)
-  encrypted_user_data   = format("{\"AccessKeyID\":\"%s\", \"SecretAccessKey\":\"%s\"}", var.ak, var.sk)
   custom_image {
     url = format("swr.%s.myhuaweicloud.com/custom_container/fg-ffmpeg:get-duration-%s", var.region, var.image_version)
   }
@@ -74,7 +72,6 @@ resource "huaweicloud_fgs_function" "ffmpeg-get-meta" {
   memory_size           = 512
   timeout               = 600
   user_data             = format("{\"ENDPOINT\":\"%s\"}", local.obs)
-  encrypted_user_data   = format("{\"AccessKeyID\":\"%s\", \"SecretAccessKey\":\"%s\"}", var.ak, var.sk)
   custom_image {
     url = format("swr.%s.myhuaweicloud.com/custom_container/fg-ffmpeg:get-meta-%s", var.region, var.image_version)
   }
@@ -90,7 +87,6 @@ resource "huaweicloud_fgs_function" "ffmpeg-get-sprites" {
   memory_size           = 512
   timeout               = 600
   user_data             = format("{\"ENDPOINT\":\"%s\"}", local.obs)
-  encrypted_user_data   = format("{\"AccessKeyID\":\"%s\", \"SecretAccessKey\":\"%s\"}", var.ak, var.sk)
   custom_image {
     url = format("swr.%s.myhuaweicloud.com/custom_container/fg-ffmpeg:get-sprites-%s", var.region, var.image_version)
   }
@@ -106,7 +102,6 @@ resource "huaweicloud_fgs_function" "ffmpeg-video-gif" {
   memory_size           = 512
   timeout               = 600
   user_data             = format("{\"ENDPOINT\":\"%s\"}", local.obs)
-  encrypted_user_data   = format("{\"AccessKeyID\":\"%s\", \"SecretAccessKey\":\"%s\"}", var.ak, var.sk)
   custom_image {
     url = format("swr.%s.myhuaweicloud.com/custom_container/fg-ffmpeg:video-gif-%s", var.region, var.image_version)
   }
@@ -122,7 +117,6 @@ resource "huaweicloud_fgs_function" "ffmpeg-video-watermark" {
   memory_size           = 512
   timeout               = 600
   user_data             = format("{\"ENDPOINT\":\"%s\"}", local.obs)
-  encrypted_user_data   = format("{\"AccessKeyID\":\"%s\", \"SecretAccessKey\":\"%s\"}", var.ak, var.sk)
   custom_image {
     url = format("swr.%s.myhuaweicloud.com/custom_container/fg-ffmpeg:video-watermark-%s", var.region, var.image_version)
   }
