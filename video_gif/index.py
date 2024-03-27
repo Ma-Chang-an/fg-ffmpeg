@@ -24,12 +24,6 @@ vframes  和 duration 可选， 当同时填写的时候， 以 duration 为准
 app = Flask(__name__, static_folder='static', template_folder='templates')
 app.logger.setLevel('INFO')
 
-ObsClient = ObsClient(
-    access_key_id=os.getenv("AccessKeyID"),
-    secret_access_key=os.getenv("SecretAccessKey"),
-    server=os.getenv('ENDPOINT'),
-)
-
 def splitObjectName(objectName):
     (fileDir, filename) = os.path.split(objectName)
     (shortname, extension) = os.path.splitext(filename)
@@ -68,9 +62,14 @@ def invoke():
 
         fileDir, shortname, extension = splitObjectName(objectKey)
 
+        obsClient = ObsClient(
+            access_key_id=request.headers.get('x-cff-access-key'),
+            secret_access_key=request.headers.get('x-cff-secret-key'),
+            server=os.getenv('ENDPOINT'),
+        )
         savePath = '/tmp/{0}{1}'.format(shortname, extension)
         headers = GetObjectHeader()
-        resp = ObsClient.getObject(obsBucketName, objectKey, savePath, headers)
+        resp = obsClient.getObject(obsBucketName, objectKey, savePath, headers)
         if resp.status >= 300:
             app.logger.error(resp.body)
             raise Exception('get object failed')
@@ -94,7 +93,7 @@ def invoke():
         
         os.remove(savePath)
         gif_key = os.path.join(output_dir, fileDir, shortname + ".gif")
-        resp = ObsClient.putFile(obsBucketName, gif_key, gif_path, headers=headers)
+        resp = obsClient.putFile(obsBucketName, gif_key, gif_path, headers=headers)
         os.remove(gif_path)
         if resp.status >= 300:
             app.logger.error(resp.body)

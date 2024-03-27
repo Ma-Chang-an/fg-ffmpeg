@@ -41,12 +41,6 @@ dst_type: 可选，生成的雪碧图图片格式，默认为 jpg，主要为 jp
 app = Flask(__name__, static_folder='static', template_folder='templates')
 app.logger.setLevel('INFO')
 
-ObsClient = ObsClient(
-    access_key_id=os.getenv("AccessKeyID"),
-    secret_access_key=os.getenv("SecretAccessKey"),
-    server=os.getenv('ENDPOINT'),
-)
-
 def splitObjectName(objectName):
     (fileDir, filename) = os.path.split(objectName)
     (shortname, extension) = os.path.splitext(filename)
@@ -89,9 +83,14 @@ def invoke():
 
         fileDir, shortname, extension = splitObjectName(objectKey)
 
+        obsClient = ObsClient(
+            access_key_id=request.headers.get('x-cff-access-key'),
+            secret_access_key=request.headers.get('x-cff-secret-key'),
+            server=os.getenv('ENDPOINT'),
+        )
         savePath = '/tmp/{0}{1}'.format(shortname, extension)
         headers = GetObjectHeader()
-        resp = ObsClient.getObject(obsBucketName, objectKey, savePath, headers)
+        resp = obsClient.getObject(obsBucketName, objectKey, savePath, headers)
         if resp.status >= 300:
             app.logger.error(resp.body)
             raise Exception('get object failed')
@@ -119,7 +118,7 @@ def invoke():
                 headers = PutObjectHeader()
                 headers.contentType = 'text/plain'
                 objectKey = os.path.join(output_dir, fileDir, filename)
-                resp = ObsClient.putFile(obsBucketName, objectKey, filepath, headers=headers)
+                resp = obsClient.putFile(obsBucketName, objectKey, filepath, headers=headers)
                 os.remove(filepath)
                 if resp.status >= 300:
                     app.logger.error(resp.body)

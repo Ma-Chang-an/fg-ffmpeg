@@ -20,12 +20,6 @@ from flask import Flask, request
 app = Flask(__name__, static_folder='static', template_folder='templates')
 app.logger.setLevel('INFO')
 
-ObsClient = ObsClient(
-    access_key_id=os.getenv("AccessKeyID"),
-    secret_access_key=os.getenv("SecretAccessKey"),
-    server=os.getenv('ENDPOINT'),
-)
-
 def splitObjectName(objectName):
     (fileDir, filename) = os.path.split(objectName)
     (shortname, extension) = os.path.splitext(filename)
@@ -59,8 +53,13 @@ def invoke():
 
         fileDir, shortname, extension = splitObjectName(objectKey)
 
+        obsClient = ObsClient(
+            access_key_id=request.headers.get('x-cff-access-key'),
+            secret_access_key=request.headers.get('x-cff-secret-key'),
+            server=os.getenv('ENDPOINT'),
+        )
         headers = GetObjectHeader()
-        resp = ObsClient.getObject(obsBucketName, objectKey, '/tmp/{0}{1}'.format(shortname, extension), headers)
+        resp = obsClient.getObject(obsBucketName, objectKey, '/tmp/{0}{1}'.format(shortname, extension), headers)
         if resp.status >= 300:
             app.logger.error(resp.body)
             raise Exception('get object failed')
@@ -92,7 +91,7 @@ def invoke():
                 headers = PutObjectHeader()
                 headers.contentType = 'text/plain'
                 objectKey = os.path.join(outputDir, fileDir, filename)
-                resp = ObsClient.putFile(obsBucketName, objectKey, filepath, headers=headers)
+                resp = obsClient.putFile(obsBucketName, objectKey, filepath, headers=headers)
                 os.remove(filepath)
                 if resp.status >= 300:
                     app.logger.error(resp.body)

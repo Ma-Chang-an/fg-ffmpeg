@@ -16,12 +16,6 @@ from flask import Flask, request
 app = Flask(__name__, static_folder='static', template_folder='templates')
 app.logger.setLevel('INFO')
 
-ObsClient = ObsClient(
-    access_key_id=os.getenv("AccessKeyID"),
-    secret_access_key=os.getenv("SecretAccessKey"),
-    server=os.getenv('ENDPOINT'),
-)
-
 def splitObjectName(objectName):
     (fileDir, filename) = os.path.split(objectName)
     (shortname, extension) = os.path.splitext(filename)
@@ -50,9 +44,14 @@ def invoke():
 
         shortname, extension = splitObjectName(objectKey)
 
+        obsClient = ObsClient(
+            access_key_id=request.headers.get('x-cff-access-key'),
+            secret_access_key=request.headers.get('x-cff-secret-key'),
+            server=os.getenv('ENDPOINT'),
+        )
         savePath = '/tmp/{0}{1}'.format(shortname, extension)
         headers = GetObjectHeader()
-        resp = ObsClient.getObject(obsBucketName, objectKey, savePath, headers)
+        resp = obsClient.getObject(obsBucketName, objectKey, savePath, headers)
         if resp.status >= 300:
             app.logger.error(resp.body)
             raise Exception('get object failed')
