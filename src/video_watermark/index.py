@@ -12,7 +12,7 @@ from flask import Flask, request
     "bucket_name" : "test-bucket",
     "object_key" : "a.mp4",
     "output_dir" : "output/",
-    "vf_args" : "drawtext=fontfile=/usr/share/fonts/truetype/wqy/wqy-zenhei.ttc:text='华为云函数工作流':x=100:y=50:fontsize=24:fontcolor=red:shadowy=2",
+    "vf_args" : "drawtext=fontfile=/Cascadia.ttf:text='my-watermark':x=50:y=50:fontsize=24:fontcolor=red:shadowy=1",
     "filter_complex_args": "overlay=0:0:1"
 }
 
@@ -20,7 +20,7 @@ filter_complex_args 优先级 > vf_args
 
 vf_args:
 - 文字水印
-vf_args = "drawtext=fontfile=/usr/share/fonts/truetype/wqy/wqy-zenhei.ttc:text='华为云函数工作流':x=50:y=50:fontsize=24:fontcolor=red:shadowy=1"
+vf_args = "drawtext=fontfile=/Cascadia.ttf:text='my-watermark':x=50:y=50:fontsize=24:fontcolor=red:shadowy=1"
 - 图片水印, 静态图片
 vf_args = "movie=/logo.png[watermark];[in][watermark]overlay=10:10[out]"
 
