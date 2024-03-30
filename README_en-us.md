@@ -43,14 +43,14 @@ Enter the FunctionGraph application center in the Beijing 4 or Shanghai 1 region
 
 After the application is created successfully, you can see the URN of the created function in the "Resources" section at the bottom of the application details page. The function URN is the unique identifier of the function and needs to be used when calling the function. There are 6 such function URNs, and below is a brief introduction to the function of each function:
 
-| Function URN (Physical Resource Name/ID) | Function Name (Logical Name) | Description | Usage |
-|--|--|--|--|
-| urn:fss:<region>:<project_id>:function:default:ffmpeg-get-duration_2024xxxxxxxx:lastest | ffmpeg-get-duration | Get video duration | |
-| urn:fss:<region>:<project_id>:function:default:ffmpeg-audio-convert_2024xxxxxxxx:lastest | ffmpeg-audio-convert | Audio transcoding | |
-| urn:fss:<region>:<project_id>:function:default:ffmpeg-get-meta_2024xxxxxxxx:lastest | ffmpeg-get-meta | Get audio and video metadata | |
-| urn:fss:<region>:<project_id>:function:default:ffmpeg-get-sprites_2024xxxxxxxx:lastest | ffmpeg-get-sprites | Get video frames | |
-| urn:fss:<region>:<project_id>:function:default:ffmpeg-video-gif_2024xxxxxxxx:lastest | ffmpeg-video-gif | Video to GIF | |
-| urn:fss:<region>:<project_id>:function:default:ffmpeg-video-watermark_2024xxxxxxxx:lastest | ffmpeg-video-watermark | Video watermarking | |
+| Function URN (Physical Resource Name/ID) | Function Name (Logical Name) | Description |
+|--|--|--|
+| urn:fss:region:project_id:function:default:ffmpeg-get-duration_2024xxxxxxxx:lastest | ffmpeg-get-duration | Get video duration |
+| urn:fss:region:project_id:function:default:ffmpeg-audio-convert_2024xxxxxxxx:lastest | ffmpeg-audio-convert | Audio transcoding |
+| urn:fss:region:project_id:function:default:ffmpeg-get-meta_2024xxxxxxxx:lastest | ffmpeg-get-meta | Get audio and video metadata |
+| urn:fss:region:project_id:function:default:ffmpeg-get-sprites_2024xxxxxxxx:lastest | ffmpeg-get-sprites | Get video frames |
+| urn:fss:region:project_id:function:default:ffmpeg-video-gif_2024xxxxxxxx:lastest | ffmpeg-video-gif | Video to GIF |
+| urn:fss:region:project_id:function:default:ffmpeg-video-watermark_2024xxxxxxxx:lastest | ffmpeg-video-watermark | Video watermarking |
 
 ### Create OBS Bucket and Upload Input Files
 
