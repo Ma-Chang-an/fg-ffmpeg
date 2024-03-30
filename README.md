@@ -42,14 +42,14 @@ FFmpeg 是一个开源的跨平台音视频处理工具，它可以用来录制�
 ### 获取函数URN
 应用创建成功后，在应用详情页面下方的“资源”中可以看到创建出的函数的URN，函数URN是函数的唯一标识，在调用函数时需要使用函数URN。这样的函数URN共有6个，下面简要介绍每个函数的作用：
 
-|函数URN(物理资源名称/ID)|函数名(逻辑名称)|介绍|
-|--|--|--|
-|urn:fss:region:project_id:function:default:ffmpeg-get-duration_2024xxxxxxxx:lastest|ffmpeg-get-duration|获取视频时长|
-|urn:fss:region:project_id:function:default:ffmpeg-audio-convert_2024xxxxxxxx:lastest|ffmpeg-audio-convert|音频转码|
-|urn:fss:region:project_id:function:default:ffmpeg-get-meta_2024xxxxxxxx:lastest|ffmpeg-get-meta|获取音视频元信息|
-|urn:fss:region:project_id:function:default:ffmpeg-get-sprites_2024xxxxxxxx:lastest|ffmpeg-get-sprites|获取视频截帧|
-|urn:fss:region:project_id:function:default:ffmpeg-video-gif_2024xxxxxxxx:lastest|ffmpeg-video-gif|视频转 GIF|
-|urn:fss:region:project_id:function:default:ffmpeg-video-watermark_2024xxxxxxxx:lastest|ffmpeg-video-watermark|视频加水印|
+|函数URN(物理资源名称/ID)|函数名(逻辑名称)|介绍|参数示例|
+|--|--|--|--|
+|urn:fss:region:project_id:function:default:ffmpeg-get-duration_2024xxxxxxxx:lastest|ffmpeg-get-duration|获取视频时长|{"bucket_name" : "test-bucket","object_key" : "a.mp4"}|
+|urn:fss:region:project_id:function:default:ffmpeg-audio-convert_2024xxxxxxxx:lastest|ffmpeg-audio-convert|音频转码|{"bucket_name" : "test-bucket","object_key" : "a.mp3","output_dir" : "output/","dst_type": ".wav","ac": 1,"ar": 4000}|
+|urn:fss:region:project_id:function:default:ffmpeg-get-meta_2024xxxxxxxx:lastest|ffmpeg-get-meta|获取音视频元信息|{"bucket_name" : "test-bucket","object_key" : "a.mp4"}|
+|urn:fss:region:project_id:function:default:ffmpeg-get-sprites_2024xxxxxxxx:lastest|ffmpeg-get-sprites|获取视频截帧|{"bucket_name" : "test-bucket","object_key" : "a.mp4","output_dir" : "output/","tile": "3*4","start": 0,"duration": 10,"itsoffset": 0,"scale": "-1:-1","interval": 2,"padding": 1, "color": "black","dst_type": "jpg"}|
+|urn:fss:region:project_id:function:default:ffmpeg-video-gif_2024xxxxxxxx:lastest|ffmpeg-video-gif|视频转 GIF|{"bucket_name" : "test-bucket","object_key" : "a.mp4","output_dir" : "output/","vframes" : 20,"start": 0,"duration": 2}|
+|urn:fss:region:project_id:function:default:ffmpeg-video-watermark_2024xxxxxxxx:lastest|ffmpeg-video-watermark|视频加水印|{"bucket_name" : "test-bucket","object_key" : "a.mp4","output_dir" : "output/","vf_args" : "drawtext=fontfile=/Cascadia.ttf:text='my-watermark':x=50:y=50:fontsize=24:fontcolor=red:shadowy=1","filter_complex_args": "overlay=0:0:1"}|
 
 
 ### 创建 OBS 桶并上传输入文件

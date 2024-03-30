@@ -43,14 +43,14 @@ Enter the FunctionGraph application center in the Beijing 4 or Shanghai 1 region
 
 After the application is created successfully, you can see the URN of the created function in the "Resources" section at the bottom of the application details page. The function URN is the unique identifier of the function and needs to be used when calling the function. There are 6 such function URNs, and below is a brief introduction to the function of each function:
 
-| Function URN (Physical Resource Name/ID) | Function Name (Logical Name) | Description |
-|--|--|--|
-| urn:fss:region:project_id:function:default:ffmpeg-get-duration_2024xxxxxxxx:lastest | ffmpeg-get-duration | Get video duration |
-| urn:fss:region:project_id:function:default:ffmpeg-audio-convert_2024xxxxxxxx:lastest | ffmpeg-audio-convert | Audio transcoding |
-| urn:fss:region:project_id:function:default:ffmpeg-get-meta_2024xxxxxxxx:lastest | ffmpeg-get-meta | Get audio and video metadata |
-| urn:fss:region:project_id:function:default:ffmpeg-get-sprites_2024xxxxxxxx:lastest | ffmpeg-get-sprites | Get video frames |
-| urn:fss:region:project_id:function:default:ffmpeg-video-gif_2024xxxxxxxx:lastest | ffmpeg-video-gif | Video to GIF |
-| urn:fss:region:project_id:function:default:ffmpeg-video-watermark_2024xxxxxxxx:lastest | ffmpeg-video-watermark | Video watermarking |
+| Function URN (Physical Resource Name/ID) | Function Name (Logical Name) | Description |Parameter Example |
+|--|--|--|--|
+|urn:fss:region:project_id:function:default:ffmpeg-get-duration_2024xxxxxxxx:lastest|ffmpeg-get-duration|Get video duration|{"bucket_name" : "test-bucket","object_key" : "a.mp4"}|
+|urn:fss:region:project_id:function:default:ffmpeg-audio-convert_2024xxxxxxxx:lastest|ffmpeg-audio-convert|Audio transcoding|{"bucket_name" : "test-bucket","object_key" : "a.mp3","output_dir" : "output/","dst_type": ".wav","ac": 1,"ar": 4000}|
+|urn:fss:region:project_id:function:default:ffmpeg-get-meta_2024xxxxxxxx:lastest|ffmpeg-get-meta|Get audio and video metadata|{"bucket_name" : "test-bucket","object_key" : "a.mp4"}|
+|urn:fss:region:project_id:function:default:ffmpeg-get-sprites_2024xxxxxxxx:lastest|ffmpeg-get-sprites|Get video frames|{"bucket_name" : "test-bucket","object_key" : "a.mp4","output_dir" : "output/","tile": "3*4","start": 0,"duration": 10,"itsoffset": 0,"scale": "-1:-1","interval": 2,"padding": 1, "color": "black","dst_type": "jpg"}|
+|urn:fss:region:project_id:function:default:ffmpeg-video-gif_2024xxxxxxxx:lastest|ffmpeg-video-gif|视频转 GIF|{"bucket_name" : "test-bucket","object_key" : "a.mp4","output_dir" : "output/","vframes" : 20,"start": 0,"duration": 2}|
+|urn:fss:region:project_id:function:default:ffmpeg-video-watermark_2024xxxxxxxx:lastest|ffmpeg-video-watermark|ideo watermarking|{"bucket_name" : "test-bucket","object_key" : "a.mp4","output_dir" : "output/","vf_args" : "drawtext=fontfile=/Cascadia.ttf:text='my-watermark':x=50:y=50:fontsize=24:fontcolor=red:shadowy=1","filter_complex_args": "overlay=0:0:1"}|
 
 ### Create OBS Bucket and Upload Input Files
 
