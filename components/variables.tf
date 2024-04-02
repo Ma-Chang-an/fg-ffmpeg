@@ -18,13 +18,7 @@ variable "image_version" {
     description = " Specifies the image version."
     default     = "v1"
 }
-variable "ak" {
-    type        = string
-    description = "AccessKeyID access to OBS"
-    default     = ""
-}
-variable "sk" {
-    type        = string
-    description = "SecretAccessKey access to OBS"
-    default     = ""
+variable "code_url" {
+  type        = string
+  description = "code_url"
 }

@@ -40,7 +40,7 @@ resource "huaweicloud_fgs_function" "ffmpeg-audio-convert" {
   app                   = "default"
   runtime               = "Custom"
   memory_size           = 512
-  timeout               = 600
+  timeout               = 3600
   user_data             = format("{\"ENDPOINT\":\"%s\"}", local.obs)
   custom_image {
     url = format("swr.%s.myhuaweicloud.com/custom_container/fg-ffmpeg:audio-convert-%s", var.region, var.image_version)
@@ -55,7 +55,7 @@ resource "huaweicloud_fgs_function" "ffmpeg-get-duration" {
   app                   = "default"
   runtime               = "Custom"
   memory_size           = 512
-  timeout               = 600
+  timeout               = 900
   user_data             = format("{\"ENDPOINT\":\"%s\"}", local.obs)
   custom_image {
     url = format("swr.%s.myhuaweicloud.com/custom_container/fg-ffmpeg:get-duration-%s", var.region, var.image_version)
@@ -70,7 +70,7 @@ resource "huaweicloud_fgs_function" "ffmpeg-get-meta" {
   app                   = "default"
   runtime               = "Custom"
   memory_size           = 512
-  timeout               = 600
+  timeout               = 900
   user_data             = format("{\"ENDPOINT\":\"%s\"}", local.obs)
   custom_image {
     url = format("swr.%s.myhuaweicloud.com/custom_container/fg-ffmpeg:get-meta-%s", var.region, var.image_version)
@@ -85,7 +85,7 @@ resource "huaweicloud_fgs_function" "ffmpeg-get-sprites" {
   app                   = "default"
   runtime               = "Custom"
   memory_size           = 512
-  timeout               = 600
+  timeout               = 3600
   user_data             = format("{\"ENDPOINT\":\"%s\"}", local.obs)
   custom_image {
     url = format("swr.%s.myhuaweicloud.com/custom_container/fg-ffmpeg:get-sprites-%s", var.region, var.image_version)
@@ -100,7 +100,7 @@ resource "huaweicloud_fgs_function" "ffmpeg-video-gif" {
   app                   = "default"
   runtime               = "Custom"
   memory_size           = 512
-  timeout               = 600
+  timeout               = 3600
   user_data             = format("{\"ENDPOINT\":\"%s\"}", local.obs)
   custom_image {
     url = format("swr.%s.myhuaweicloud.com/custom_container/fg-ffmpeg:video-gif-%s", var.region, var.image_version)
@@ -115,7 +115,7 @@ resource "huaweicloud_fgs_function" "ffmpeg-video-watermark" {
   app                   = "default"
   runtime               = "Custom"
   memory_size           = 512
-  timeout               = 600
+  timeout               = 3600
   user_data             = format("{\"ENDPOINT\":\"%s\"}", local.obs)
   custom_image {
     url = format("swr.%s.myhuaweicloud.com/custom_container/fg-ffmpeg:video-watermark-%s", var.region, var.image_version)

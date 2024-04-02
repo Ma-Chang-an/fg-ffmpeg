@@ -2,6 +2,7 @@ app-template:
   name: '{"zh-cn": "fg-FFmpeg", "en-us": "fg-FFmpeg"}'
   description: '{"zh-cn": "FFmpeg","en-us": "FFmpeg"}'
   path: fg-ffmpeg
+  version: 20240403
   runtime: http
   category: '{"zh-cn": "音视频处理", "en-us": "Audio and video processing"}'
   image: fg-ffmpeg.png
