@@ -31,7 +31,7 @@ FFmpeg 是一个开源的跨平台音视频处理工具，它可以用来录制�
 |OBS Administrator|授予FunctionGraph服务访问OBS服务的权限|
 |SWR Administrator|授予FunctionGraph服务访问SWR服务的权限|
 
-最后后点击确定即可。
+最后点击确定即可。
 
 ## 应用部署
 
