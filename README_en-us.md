@@ -60,7 +60,11 @@ After the application is created successfully, you can see the URN of the create
 
 ### Call Function
 
-Please refer to [How to Call API](https://support.huaweicloud.com/api-functiongraph/functiongraph_06_0200.html).
+This document introduces the usage of the application using Python language as an example. It assumes that you already have a Python 3.6 or above runtime environment installed on your local system. The document will not cover the specific installation process of Python environment. There are two ways to call functions through the Function Flow API: the REST API style and the SDK. This document will focus on the SDK method for illustration.
+
+Please refer to the Function Flow API Reference for learning about the REST API related content.
+
+Please refer to the Function Flow SDK Reference for learning about the Function Flow SDK related content.
 
 #### Synchronous Execution
 

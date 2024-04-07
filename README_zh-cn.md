@@ -60,7 +60,11 @@ FFmpeg 是一个开源的跨平台音视频处理工具，它可以用来录制�
 
 ### 调用函数
 
-请参见[如何调用 API](https://support.huaweicloud.com/api-functiongraph/functiongraph_06_0200.html)。
+本文档以Python语言为例，介绍应用的使用方法，默认您本地已经具备Python 3.6以上运行环境，不再介绍Python环境具体安装过程，通过函数工作流API调用函数有REST风格API和SDK两种方式，本文以SDK方式为例进行介绍。
+
+请阅读[函数工作流API参考](https://support.huaweicloud.com/api-functiongraph/functiongraph_06_1600.html)学习REST风格API相关内容。
+
+请阅读[函数工作流SDK参考](https://support.huaweicloud.com/sdkreference-functiongraph/functiongraph_07_0100.html)学习函数工作流SDK相关内容。
 
 #### 同步执行
 
