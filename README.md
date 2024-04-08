@@ -51,6 +51,95 @@ FFmpeg 是一个开源的跨平台音视频处理工具，它可以用来录制�
 |urn:fss:region:project_id:function:default:ffmpeg-video-gif_2024xxxxxxxx:lastest|ffmpeg-video-gif|视频转 GIF|{"bucket_name" : "test-bucket","object_key" : "a.mp4","output_dir" : "output/","vframes" : 20,"start": 0,"duration": 2}|
 |urn:fss:region:project_id:function:default:ffmpeg-video-watermark_2024xxxxxxxx:lastest|ffmpeg-video-watermark|视频加水印|{"bucket_name" : "test-bucket","object_key" : "a.mp4","output_dir" : "output/","vf_args" : "drawtext=fontfile=/Cascadia.ttf:text='my-watermark':x=50:y=50:fontsize=24:fontcolor=red:shadowy=1","filter_complex_args": "overlay=0:0:1"}|
 
+#### 部分函数输入参数介绍
+##### ffmpeg-get-sprites
+
+```
+{
+    "bucket_name" : "test-bucket",
+    "object_key" : "a.mp4",
+    "output_dir" : "output/",
+    "tile": "3*4",
+    "start": 0,
+    "duration": 10,
+    "itsoffset": 0,
+    "scale": "-1:-1",
+    "interval": 2,
+    "padding": 1, 
+    "color": "black",
+    "dst_type": "jpg"
+}
+tile: 必填， 雪碧图的 rows * cols
+start: 可选， 默认是为 0
+duration: 可选，表示基于 start 之后的多长时间的视频内进行截图，
+比如 start 为 10， duration 为 20，表示基于视频的10s-30s内进行截图
+interval: 可选，每隔多少秒截图一次， 默认为 1
+scale: 可选，截图的大小, 默认为 -1:-1， 默认为原视频大小, 320:240, iw/2:ih/2 
+itsoffset: 可选，默认为 0, delay多少秒，配合start、interval使用
+- 假设 start 为 0， interval 为 10，itsoffset 为 0， 那么截图的秒数为 5， 15， 25 ...
+- 假设 start 为 0， interval 为 10，itsoffset 为 1， 那么截图的秒数为 4， 14， 24 ...
+- 假设 start 为 0， interval 为 10，itsoffset 为 4.999(不要写成5，不然会丢失0秒的那一帧图)， 那么截图的秒数为 0， 10， 20 ...
+- 假设 start 为 0， interval 为 10，itsoffset 为 -1， 那么截图的秒数为 6， 16，26 ...
+padding: 可选，图片之间的间隔, 默认为 0
+color: 可选，雪碧图背景颜色，默认黑色， https://ffmpeg.org/ffmpeg-utils.html#color-syntax
+dst_type: 可选，生成的雪碧图图片格式，默认为 jpg，主要为 jpg 或者 png， https://ffmpeg.org/ffmpeg-all.html#image2-1
+```
+
+##### ffmpeg-video-gif
+
+```
+{
+    "bucket_name" : "test-bucket",
+    "object_key" : "a.mp4",
+    "output_dir" : "output/",
+    "vframes" : 20,
+    "start": 0,
+    "duration": 2
+}
+start 可选， 默认是为 0
+vframes  和 duration 可选， 当同时填写的时候， 以 duration 为准
+当都没有填写的时候， 默认整个视频转为gif
+```
+
+###### ffmpeg-video-watermark
+
+```
+event format
+{
+    "bucket_name" : "test-bucket",
+    "object_key" : "a.mp4",
+    "output_dir" : "output/",
+    "vf_args" : "drawtext=fontfile=/Cascadia.ttf:text='my-watermark':x=50:y=50:fontsize=24:fontcolor=red:shadowy=1",
+    "filter_complex_args": "overlay=0:0:1"
+}
+
+filter_complex_args 优先级 > vf_args
+
+vf_args:
+- 文字水印
+vf_args = "drawtext=fontfile=/Cascadia.ttf:text='my-watermark':x=50:y=50:fontsize=24:fontcolor=red:shadowy=1"
+- 图片水印, 静态图片
+vf_args = "movie=/logo.png[watermark];[in][watermark]overlay=10:10[out]"
+
+filter_complex_args: 图片水印, 动态图片gif
+filter_complex_args = "overlay=0:0:1"
+```
+
+##### ffmpeg-audio-convert
+
+```
+{
+    "bucket_name" : "test-bucket",
+    "object_key" : "a.mp3",
+    "output_dir" : "output/",
+    "dst_type": ".wav",
+    "ac": 1,
+    "ar": 4000
+}
+dst_type: 目标格式
+ac: 可选，这个参数用于指定音频的通道数（Audio Channels），即音频文件中包含的独立声道数。通常情况下，值为1代表单声道（单通道），值为2代表立体声（双通道），值为6代表5.1环绕声等；
+ar: 可选，这个参数用于指定音频的采样率（Audio Sampling Rate），即每秒钟采集和记录声音样本的次数。
+```
 
 ### 创建 OBS 桶并上传输入文件
 
@@ -87,9 +176,10 @@ if __name__ == "__main__":
 
     credentials = BasicCredentials(ak, sk) \
 
+    # 函数所在区域，以上海一（cn-east-3）为例
     client = FunctionGraphClient.new_builder() \
         .with_credentials(credentials) \
-        .with_region(FunctionGraphRegion.value_of("cn-east-3")) \ # 函数所在区域，以上海一（cn-east-3）为例
+        .with_region(FunctionGraphRegion.value_of("cn-east-3")) \ 
         .build()
 
     try:
@@ -132,9 +222,10 @@ if __name__ == "__main__":
 
     credentials = BasicCredentials(ak, sk) \
 
+    # 函数所在区域，以上海一（cn-east-3）为例
     client = FunctionGraphClient.new_builder() \
         .with_credentials(credentials) \
-        .with_region(FunctionGraphRegion.value_of("cn-east-3")) \ # 函数所在区域，以上海一（cn-east-3）为例
+        .with_region(FunctionGraphRegion.value_of("cn-east-3")) \
         .build()
 
     try:

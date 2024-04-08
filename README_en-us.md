@@ -52,6 +52,96 @@ After the application is created successfully, you can see the URN of the create
 |urn:fss:region:project_id:function:default:ffmpeg-video-gif_2024xxxxxxxx:lastest|ffmpeg-video-gif|视频转 GIF|{"bucket_name" : "test-bucket","object_key" : "a.mp4","output_dir" : "output/","vframes" : 20,"start": 0,"duration": 2}|
 |urn:fss:region:project_id:function:default:ffmpeg-video-watermark_2024xxxxxxxx:lastest|ffmpeg-video-watermark|ideo watermarking|{"bucket_name" : "test-bucket","object_key" : "a.mp4","output_dir" : "output/","vf_args" : "drawtext=fontfile=/Cascadia.ttf:text='my-watermark':x=50:y=50:fontsize=24:fontcolor=red:shadowy=1","filter_complex_args": "overlay=0:0:1"}|
 
+#### Introduction to Partial Function Input Parameters
+
+##### ffmpeg-get-sprites
+
+```
+{
+    "bucket_name" : "test-bucket",
+    "object_key" : "a.mp4",
+    "output_dir" : "output/",
+    "tile": "3*4",
+    "start": 0,
+    "duration": 10,
+    "itsoffset": 0,
+    "scale": "-1:-1",
+    "interval": 2,
+    "padding": 1, 
+    "color": "black",
+    "dst_type": "jpg"
+}
+tile: Required, rows * cols of the sprite image
+start: Optional, default is 0
+duration: Optional, indicates the length of time within the video after start for capturing screenshots, e.g., start is 10, duration is 20, indicating capturing screenshots within 10s-30s of the video
+interval: Optional, interval in seconds for capturing screenshots, default is 1
+scale: Optional, size of the screenshots, default is -1:-1, which is the original size of the video, 320:240, iw/2:ih/2 
+itsoffset: Optional, default is 0, delay in seconds, used in conjunction with start and interval
+- Assuming start is 0, interval is 10, itsoffset is 0, then the screenshot seconds are 5, 15, 25 ...
+- Assuming start is 0, interval is 10, itsoffset is 1, then the screenshot seconds are 4, 14, 24 ...
+- Assuming start is 0, interval is 10, itsoffset is 4.999 (don't write as 5, otherwise the 0 second frame will be lost), then the screenshot seconds are 0, 10, 20 ...
+- Assuming start is 0, interval is 10, itsoffset is -1, then the screenshot seconds are 6, 16, 26 ...
+padding: Optional, spacing between images, default is 0
+color: Optional, background color of the sprite image, default is black, https://ffmpeg.org/ffmpeg-utils.html#color-syntax
+dst_type: Optional, format of the generated sprite image, default is jpg, mainly jpg or png, https://ffmpeg.org/ffmpeg-all.html#image2-1
+```
+
+##### ffmpeg-video-gif
+
+```
+{
+    "bucket_name" : "test-bucket",
+    "object_key" : "a.mp4",
+    "output_dir" : "output/",
+    "vframes" : 20,
+    "start": 0,
+    "duration": 2
+}
+start: Optional, default is 0
+vframes and duration: Optional, when filled in simultaneously, duration takes precedence
+When neither is filled in, the entire video is converted to a gif by default
+```
+
+##### ffmpeg-video-watermark
+
+```
+event format
+{
+    "bucket_name" : "test-bucket",
+    "object_key" : "a.mp4",
+    "output_dir" : "output/",
+    "vf_args" : "drawtext=fontfile=/Cascadia.ttf:text='my-watermark':x=50:y=50:fontsize=24:fontcolor=red:shadowy=1",
+    "filter_complex_args": "overlay=0:0:1"
+}
+
+filter_complex_args takes precedence over vf_args
+
+vf_args:
+- Text watermark
+vf_args = "drawtext=fontfile=/Cascadia.ttf:text='my-watermark':x=50:y=50:fontsize=24:fontcolor=red:shadowy=1"
+- Image watermark, static image
+vf_args = "movie=/logo.png[watermark];[in][watermark]overlay=10:10[out]"
+
+filter_complex_args: Image watermark, dynamic image gif
+filter_complex_args = "overlay=0:0:1"
+```
+
+##### ffmpeg-audio-convert
+
+```
+{
+    "bucket_name" : "test-bucket",
+    "object_key" : "a.mp3",
+    "output_dir" : "output/",
+    "dst_type": ".wav",
+    "ac": 1,
+    "ar": 4000
+}
+dst_type: Destination format
+ac: Optional, specifies the number of audio channels, i.e., the number of independent channels in the audio file. Typically, 1 represents mono (single channel), 2 represents stereo (dual channel), and 6 represents 5.1 surround sound;
+ar: Optional, specifies the audio sampling rate, i.e., the number of times per second that sound samples are collected and recorded.
+```
+
 ### Create OBS Bucket and Upload Input Files
 
 1. [Get AK/SK](https://support.huaweicloud.com/qs-obs/obs_qs_0005.html);
@@ -87,9 +177,10 @@ if __name__ == "__main__":
 
     credentials = BasicCredentials(ak, sk) \
 
+    # The region where the function is located, taking Shanghai 1 (cn-east-3) as an example
     client = FunctionGraphClient.new_builder() \
         .with_credentials(credentials) \
-        .with_region(FunctionGraphRegion.value_of("cn-east-3")) \ # The region where the function is located, taking Shanghai 1 (cn-east-3) as an example
+        .with_region(FunctionGraphRegion.value_of("cn-east-3")) \ 
         .build()
 
     try:
@@ -134,9 +225,10 @@ if __name__ == "__main__":
 
     credentials = BasicCredentials(ak, sk) \
 
+    # The region where the function is located, taking Shanghai 1 (cn-east-3) as an example
     client = FunctionGraphClient.new_builder() \
         .with_credentials(credentials) \
-        .with_region(FunctionGraphRegion.value_of("cn-east-3")) \ # The region where the function is located, taking Shanghai 1 (cn-east-3) as an example
+        .with_region(FunctionGraphRegion.value_of("cn-east-3")) \ 
         .build()
 
     try:

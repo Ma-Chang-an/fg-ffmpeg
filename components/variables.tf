@@ -11,7 +11,7 @@ variable "agency_name" {
 variable "region" {
     type        = string
     description = " Specifies the region."
-    default     = "cn-north-7"
+    default     = "cn-east-3"
 }
 variable "image_version" {
     type        = string

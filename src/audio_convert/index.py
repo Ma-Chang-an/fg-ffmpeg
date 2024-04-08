@@ -4,9 +4,6 @@ from obs import ObsClient, GetObjectHeader, PutObjectHeader
 from flask import Flask, request
 
 '''
-1. function and bucket locate in same region
-2. service's role has OSSFullAccess
-3. event format
 {
     "bucket_name" : "test-bucket",
     "object_key" : "a.mp3",
