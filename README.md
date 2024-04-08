@@ -170,7 +170,7 @@ from huaweicloudsdkcore.exceptions import exceptions
 from huaweicloudsdkfunctiongraph.v2 import *
 
 if __name__ == "__main__":
-    # The AK and SK used for authentication are hard-coded or stored in plaintext, which has great security risks. It is recommended that the AK and SK be stored in ciphertext in configuration files or environment variables and decrypted during use to ensure security.
+    # 本示例中 AK 和 SK 用于认证的密钥是硬编码或以明文形式存储的，这存在极大的安全风险。建议将 AK 和 SK 存储在配置文件或环境变量中以密文形式存储，并在使用过程中解密，以确保安全性。
     ak = "xxxxxx" # 替换为上述内容中获取的AccessKeyID
     sk = "xxxxxxxxxx" # 替换为上述内容中获取的SecretAccessKey
 
@@ -216,7 +216,7 @@ from huaweicloudsdkcore.exceptions import exceptions
 from huaweicloudsdkfunctiongraph.v2 import *
 
 if __name__ == "__main__":
-    # The AK and SK used for authentication are hard-coded or stored in plaintext, which has great security risks. It is recommended that the AK and SK be stored in ciphertext in configuration files or environment variables and decrypted during use to ensure security.
+    # 本示例中 AK 和 SK 用于认证的密钥是硬编码或以明文形式存储的，这存在极大的安全风险。建议将 AK 和 SK 存储在配置文件或环境变量中以密文形式存储，并在使用过程中解密，以确保安全性。
     ak = "xxxxxx" # 替换为上述内容中获取的AccessKeyID
     sk = "xxxxxxxxxx" # 替换为上述内容中获取的SecretAccessKey
 
